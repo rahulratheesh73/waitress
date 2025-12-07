@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import Image, { StaticImageData } from "next/image";
+import Link from "next/link";
 
 interface FoodCardProps {
   title: string;
@@ -9,7 +10,8 @@ interface FoodCardProps {
 
 const FoodCard = ({ title, image, delay = 0 }: FoodCardProps) => {
   return (
-    <div
+    <Link
+      href={`/menu/${title.toLowerCase().replace(/ /g, '-')}`}
       className={cn(
         "group min-h-20 relative overflow-hidden rounded-md bg-card shadow-card",
         "animate-fade-in-up",
@@ -36,7 +38,7 @@ const FoodCard = ({ title, image, delay = 0 }: FoodCardProps) => {
           {title}
         </h3>
       </div>
-    </div>
+    </Link>
   );
 };
 
