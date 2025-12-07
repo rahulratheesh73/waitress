@@ -11,7 +11,7 @@ const FoodCard = ({ title, image, delay = 0 }: FoodCardProps) => {
   return (
     <div
       className={cn(
-        "group min-h-20 relative overflow-hidden rounded-lg bg-card shadow-card",
+        "group min-h-20 relative overflow-hidden rounded-md bg-card shadow-card",
         "animate-fade-in-up",
         "transition-shadow duration-300 hover:shadow-card-hover",
         "cursor-pointer",
@@ -28,7 +28,10 @@ const FoodCard = ({ title, image, delay = 0 }: FoodCardProps) => {
         />
       </div>
       <div className="absolute inset-0 bg-linear-to-t from-foreground/70 via-foreground/20 to-transparent" />
-      <div className="absolute bottom-0 left-0 right-0 bg-linear-to-br from-orange-500 via-orange-400 to-orange-300">
+      <div className="absolute bottom-0 top-[75%] left-0 right-0 bg-linear-to-t from-orange-700 via-orange-700 to-orange-300 blur-sm">
+       
+      </div>
+      <div className="absolute bottom-0 left-0 right-0 bg-transparent">
         <h3 className="font-heading text-lg font-semibold text-center md:text-2xl text-card">
           {title}
         </h3>

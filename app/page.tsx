@@ -15,7 +15,7 @@ const cards = [
 
 const Index = () => {
   return (
-    <main className="h-dvh bg-background px-4 py-12 md:px-8 lg:px-16">
+    <main className="h-dvh bg-background px-3 py-12 md:px-8 lg:px-16">
       <div className="mx-auto max-w-6xl">
         <div className="mb-12 text-center">
           <div className="inline-block rounded-2xl bg-card/40 px-8 py-6 shadow-card backdrop-blur-3xl backdrop-saturate-150 backdrop-brightness-110">
@@ -25,7 +25,7 @@ const Index = () => {
             <div className="mx-auto mt-4 h-1 w-16 rounded-full bg-primary" />
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
           {cards.map((card, index) => (
             <FoodCard
               key={card.title}
@@ -35,7 +35,7 @@ const Index = () => {
             />
           ))}
         </div>
-        <Image className="absolute bottom-6 right-6 h-14 w-14 object-cover rounded-full shadow-md bg-linear-to-br from-orange-500 via-orange-400 to-orange-300 p-2 flex items-center justify-center" src={waiterImage} alt="Waiter" width={1000} height={1000} />
+        <Image className="absolute bottom-6 right-6 h-14 w-14 object-cover rounded-full shadow-md bg-linear-to-br from-orange-600 via-orange-500 to-orange-300 p-2 flex items-center justify-center" src={waiterImage} alt="Waiter" width={1000} height={1000} />
       </div>
     </main>
   );
