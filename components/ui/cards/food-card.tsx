@@ -11,7 +11,7 @@ interface FoodCardProps {
 const FoodCard = ({ title, image, delay = 0 }: FoodCardProps) => {
   return (
     <Link
-      href={`/menu/${title.toLowerCase().replace(/ /g, '-')}`}
+      href={`/menu`}
       className={cn(
         "group min-h-20 relative overflow-hidden rounded-md bg-card shadow-card",
         "animate-fade-in-up",
