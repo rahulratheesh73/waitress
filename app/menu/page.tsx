@@ -6,8 +6,8 @@ import menuImage from "@/public/menu.jpg";
 import combosImage from "@/public/combos.jpg";
 import specialImage from "@/public/special.jpg";
 import favouriteImage from "@/public/favourite.jpg";
-import { useEffect, useMemo, useState } from "react";
-
+import {useEffect, useMemo, useState } from "react";
+import ConfirmModal from "./ConfirmModal";
 type Category = "breakfast" | "lunch" | "dinner" | "combos";
 
 type Item = {
@@ -41,7 +41,6 @@ const SECTION_MAP: { key: Category | "all"; label: string }[] = [
 ];
 
 export default function ModernMenuUI() {
-  // auto-detect time to set a friendly default
   const defaultSection = useMemo(() => {
     const hour = new Date().getHours();
     if (hour < 11) return ("breakfast" as Category | "all");
@@ -49,12 +48,12 @@ export default function ModernMenuUI() {
     if (hour < 22) return ("dinner" as Category | "all");
     return ("combos" as Category | "all");
   }, []);
-
+    // use();
   const [section, setSection] = useState<Category | "all">(defaultSection);
   const [counts, setCounts] = useState<Record<string, number>>({});
   const [query, setQuery] = useState("");
   const [showOnlyRecommended, setShowOnlyRecommended] = useState(false);
-
+  const [ConfirmModalOpen, setConfirmModalOpen] = useState(false);
   useEffect(() => {
     // subtle entrance animation class toggle (optional)
     const root = document.documentElement;
@@ -81,12 +80,17 @@ export default function ModernMenuUI() {
   function reset() {
     setCounts({});
   }
+
   function confirmSelection() {
+    setConfirmModalOpen(true);
     const order = selected.map((s) => ({ name: s.name, qty: counts[s.id], price: s.price }));
     console.log("Customer selection:", order);
     alert(`Selected ${order.length} item(s). Check console for details.`);
   }
-
+    function handleConfirm() {
+    // perform confirmed action
+    console.log("Confirmed!");
+  }
   const total = selected.reduce((sum, s) => sum + (counts[s.id] || 0) * s.price, 0);
 
   // smart suggestions: top recommended in the current section, falling back to global
@@ -167,11 +171,11 @@ export default function ModernMenuUI() {
                     </div>
                     <div className="mt-2 flex items-center justify-between">
                       <div className="text-lg font-semibold text-slate-900">${item.price.toFixed(2)}</div>
-                      <div className="flex items-center gap-2">
+                      {/* <div className="flex items-center gap-2">
                         <button onClick={() => dec(item.id)} aria-label={`Decrease ${item.name}`} className="rounded-md bg-slate-100 px-3 py-1 text-sm">-</button>
                         <div className="min-w-[36px] text-center font-medium" aria-live="polite">{counts[item.id] || 0}</div>
                         <button onClick={() => inc(item.id)} aria-label={`Increase ${item.name}`} className="rounded-md bg-orange-500 px-3 py-1 text-white">+</button>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -232,22 +236,27 @@ export default function ModernMenuUI() {
             </div>
             <div className="flex gap-3">
               <button onClick={reset} className="rounded-md border px-4 py-2">Reset</button>
-              <button onClick={confirmSelection} className="rounded-md bg-gradient-to-r from-orange-400 to-red-400 px-4 py-2 text-white">Confirm</button>
+              <button onClick={confirmSelection} className="rounded-md bg-gradient-to-r from-orange-400 to-red-400 px-4 py-2 text-white">View</button>
             </div>
           </div>
         </section>
-
-        {/* Floating cart for quick access */}
-        <div className="fixed bottom-6 right-6 z-50 hidden sm:block">
-          <div className="flex items-center gap-4 rounded-full bg-white px-5 py-3 shadow-lg">
-            <div className="text-sm text-slate-500">Order</div>
-            <div className="text-lg font-semibold text-slate-900">${total.toFixed(2)}</div>
-            <button onClick={() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })} className="rounded-full bg-orange-500 px-4 py-2 text-white">View</button>
-          </div>
-        </div>
-
+      
+        {ConfirmModalOpen && (
+  <ConfirmModal
+    open={ConfirmModalOpen}
+    onOpenChange={setConfirmModalOpen}
+    title="Confirm Order"
+    message="Do you want to place this order?"
+    onConfirm={handleConfirm}
+    data={selected}
+    cancelLabel="Cancel"
+    confirmLabel="" // avoid empty label unless intentional
+    customDiv={<div className="mt-4 mb-2 flex items-center justify-between"></div>}
+  />
+)}
       </div>
     </main>
   );
 }
+
 // ...existing code...

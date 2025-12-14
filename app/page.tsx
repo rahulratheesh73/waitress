@@ -1,3 +1,4 @@
+"use client";
 import FoodCard from "@/components/ui/cards/food-card";
 import menuImage from "@/public/menu.jpg";
 import combosImage from "@/public/combos.jpg";
@@ -5,7 +6,9 @@ import specialImage from "@/public/special.jpg";
 import favouriteImage from "@/public/favourite.jpg";
 import waiterImage from "@/public/waiter.png";
 import Image from "next/image";
-
+import { Link } from "lucide-react";
+import { ChatBotModal } from "./menu/modal";
+import { use, useState } from "react";
 const cards = [
   { title: "Menu", image: menuImage },
   { title: "Best Combos", image: combosImage },
@@ -14,6 +17,7 @@ const cards = [
 ];
 
 const Index = () => {
+  const [modal,setMdal]=useState(true);
   return (
     <main className="h-dvh bg-background px-3 py-12 md:px-8 lg:px-16">
       <div className="mx-auto max-w-6xl">
@@ -35,10 +39,16 @@ const Index = () => {
             />
           ))}
         </div>
+        {modal && <ChatBotModal/>}
+        <Link
+          href="/contact">
         <Image className="absolute bottom-6 right-6 h-14 w-14 object-cover rounded-full shadow-md bg-linear-to-br from-orange-600 via-orange-500 to-orange-300 p-2 flex items-center justify-center" src={waiterImage} alt="Waiter" width={1000} height={1000} />
+        </Link>
       </div>
     </main>
   );
 };
 
 export default Index;
+
+
